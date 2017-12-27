@@ -52,7 +52,6 @@ def get_recipe_by_link(link):
     soup = BeautifulSoup(page, 'html.parser')
     div_recipe = soup.find(attrs={'class': 'inforecetacont'})
 
-
     recipe_title = div_recipe.find(attrs={'class': 'tituloreceta'}).find('h1').text
     image_url = div_recipe.find(attrs={'class': 'carousel'}).find('div').find('div').find('img').get('src')
     cook_url = div_recipe.find(attrs={'class': 'tituloing'}).find('a').get('href')
