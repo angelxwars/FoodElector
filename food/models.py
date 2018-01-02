@@ -19,12 +19,12 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     image = models.URLField()
     tags = models.ManyToManyField(Tag)
-    recetario = models.ForeignKey(RecipeBook)
+    recipe_book = models.ForeignKey(RecipeBook, on_delete=models.CASCADE)
 
 
 class Ingredient(models.Model):
     text = models.CharField(max_length=100)
-    recipe = models.ForeignKey(Recipe)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
 
 

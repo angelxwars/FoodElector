@@ -64,18 +64,21 @@ def get_recipe_by_link(link):
 
     tags = []
     ingredients = []
+    ingredients_str = ''
 
     for tag in div_tags:
         tags.append(tag.find('a').text)
 
     for ingredient in li_ingredients:
         ingredients.append(ingredient.text.replace('-', ' ').strip())
+        ingredients_str += ingredient.text.replace('-', ' ').strip()
 
     recipe['title'] = recipe_title
     recipe['image'] = image_url
     recipe['ingredients'] = ingredients
     recipe['tags'] = tags
     recipe['cook_url'] = cook_url
+    recipe['recipe_str'] = ingredients_str
 
     return recipe
 
