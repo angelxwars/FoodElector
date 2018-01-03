@@ -1,5 +1,7 @@
 from urllib import request
 from bs4 import BeautifulSoup
+from collections import OrderedDict
+import csv
 
 
 # open any url
@@ -63,14 +65,14 @@ def get_recipe_by_link(link):
     div_tags = div_recipe.find(attrs={'class': 'tagsReceta'}).find('ul').find_all('li')
 
     tags = []
-    ingredients = []
+    ingredients = ''
     ingredients_str = ''
 
     for tag in div_tags:
         tags.append(tag.find('a').text)
 
     for ingredient in li_ingredients:
-        ingredients.append(ingredient.text.replace('-', ' ').strip())
+        ingredients += '|' + ingredient.text.replace('-', ' ').strip()
         ingredients_str += ingredient.text.replace('-', ' ').strip()
 
     recipe['title'] = recipe_title
@@ -100,7 +102,25 @@ def get_information(url):
     print(cont, " recetas")
 
 
+def save_information_csv(url):
+    recipe_books = get_recipe_books('http://www.recetags.com/recetarios')
+    recipe_links = []
+    recipes = []
+    file = open('recipes.csv', 'w')
+    ordered_fieldnames = OrderedDict([('title', None), ('image', None), ('ingredients', None), ('tags', None),
+                                      ('cook_url', None), ('recipe_str', None)])
+    cont = 0
+    with file:
+        writer = csv.DictWriter(file, delimiter=',', fieldnames=ordered_fieldnames)
+        writer.writeheader()
+        for recipe_book in recipe_books:
+            print(get_recipes_link_by_book(recipe_book))
+            recipe_links = recipe_links + get_recipes_link_by_book(recipe_book)
+            for recipe_link in get_recipes_link_by_book(recipe_book):
+                print(get_recipe_by_link(recipe_link))
+                writer.writerow(get_recipe_by_link(recipe_link))
+                cont += 1
 
 
 
-get_information('http://www.recetags.com/recetarios')
+save_information_csv('http://www.recetags.com/recetarios')
