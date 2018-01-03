@@ -25,8 +25,3 @@ class Recipe(models.Model):
 class Ingredient(models.Model):
     text = models.CharField(max_length=100)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-
-
-
-
-
