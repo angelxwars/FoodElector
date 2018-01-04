@@ -10,7 +10,7 @@ def populate():
     Ingredient.objects.all().delete()
     Tag.objects.all().delete()
 
-    file = open("recipes.csv" , "r")
+    file = open("scraping/recipes.csv" , "r")
     i=2
     line = file.readline()
     # Creo un recipeBook, ya que no se guarda en el csv, y siempre voy a añadir este
@@ -39,7 +39,5 @@ def populate():
             for ingredient in ing:
                 Ingredient.objects.create(name=ingredient, recipe=recipe)
         line = file.readline()
-    print("Se ha populado " + Recipe.objects.count() + "recetas.")
-
-populate()
-
+    print("Se ha populado " + str(Recipe.objects.count()) + "recetas.")
+    return Recipe.objects.count()

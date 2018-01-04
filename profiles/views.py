@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 
 from profiles.forms import RegisterForm
 from profiles.models import Profile
+from scraping.populate import populate
 
 
 def index(request):
@@ -37,4 +38,6 @@ def register(request):
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
 
-
+def Populate(request):
+    numero = populate()
+    return render(request, 'populate.html', {'numero':numero})
