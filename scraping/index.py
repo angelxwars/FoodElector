@@ -85,7 +85,7 @@ def get_recipe_by_link(link):
     return recipe
 
 
-def get_information(url):
+def get_information():
     recipe_books = get_recipe_books('http://www.recetags.com/recetarios')
     recipe_links = []
     recipes = []
@@ -98,30 +98,30 @@ def get_information(url):
             recipes.append(get_recipe_by_link(recipe_link))
             cont += 1
 
-
     print(cont, " recetas")
 
 
-def save_information_csv(url):
+def save_information_csv():
     recipe_books = get_recipe_books('http://www.recetags.com/recetarios')
     recipe_links = []
-    recipes = []
     file = open('recipes.csv', 'w')
     ordered_fieldnames = OrderedDict([('title', None), ('image', None), ('ingredients', None), ('tags', None),
-                                      ('cook_url', None), ('recipe_str', None)])
+                                      ('cook_url', None), ('recipe_str', None), ('recipe_book_title', None),
+                                      ('recipe_book_link', None)])
     cont = 0
     with file:
-        writer = csv.DictWriter(file, delimiter='#', fieldnames=ordered_fieldnames)
+        writer = csv.DictWriter(file, delimiter=';', fieldnames=ordered_fieldnames)
         writer.writeheader()
         for recipe_book in recipe_books:
             print(get_recipes_link_by_book(recipe_book))
             recipe_links = recipe_links + get_recipes_link_by_book(recipe_book)
             for recipe_link in get_recipes_link_by_book(recipe_book):
                 print(get_recipe_by_link(recipe_link))
-                writer.writerow(get_recipe_by_link(recipe_link))
+                recipe_dict = get_recipe_by_link(recipe_link)
+                recipe_dict['recipe_book_title'] = recipe_book.get('recipe_book_title')
+                recipe_dict['recipe_book_link'] = recipe_book.get('recipe_book_link')
+                writer.writerow(recipe_dict)
                 cont += 1
 
 
-
-save_information_csv('http://www.recetags.com/recetarios')
-print("HOla para hola")
+save_information_csv()
