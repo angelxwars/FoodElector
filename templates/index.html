@@ -3,7 +3,13 @@
 {% block content %}
 
     <div class="starter-template">
-        <h1>Food Elector</h1>
-        <p class="lead">Aacceso Inteligente a la Información - Curso 2017/18 </p>
+        {% if user.is_authenticated  %}
+            <h1>Hola de nuevo, {{request.user.username}}</h1>
+            <p class="lead">¿Que ingredientes tienes hoy?</p>
+            <a type="button" href="{% url 'ingredients' %}" class="btn btn-primary btn-lg">Elegir Ingredientes</a>
+        {% else %}
+            <h1>Bienvenido a Food Elector</h1>
+            <p class="lead">Entra en tu cuenta o registrate para consultar que puedes cocinar</p>
+        {% endif %}
       </div>
 {% endblock %}

@@ -11,7 +11,7 @@ from scraping.populate import populate
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'username': request.user.username})
 
 
 def register(request):

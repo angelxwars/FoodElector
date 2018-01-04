@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Puedes cocinar las siguientes recetas: </h1>
+    <br/>
+    <ul>
+        <div class="row">
+        {% for recipe in recipes %}
+            <div class="card col-xs-6" style="width: 300px">
+                <img class="card-img-top" src="{% static 'img/recetas.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <h4 class="card-title">{{ recipe }}</h4>
+                    <a href="#" class="btn btn-primary">Ver receta</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </ul>
+
+
+{% endblock %}

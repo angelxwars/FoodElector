@@ -20,7 +20,7 @@ def populate():
         # las impares que tienen linea
         i = i+1
         if i % 2 == 1:
-            occ = line.split(",")
+            occ = line.split(";")
             title = occ[0].strip()
             image = occ[1].strip()
             # Elimino el primer elemento de los ingredientes ya que es un elemento en blanco,
