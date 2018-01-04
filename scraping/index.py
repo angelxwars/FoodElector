@@ -111,7 +111,7 @@ def save_information_csv(url):
                                       ('cook_url', None), ('recipe_str', None)])
     cont = 0
     with file:
-        writer = csv.DictWriter(file, delimiter=',', fieldnames=ordered_fieldnames)
+        writer = csv.DictWriter(file, delimiter='#', fieldnames=ordered_fieldnames)
         writer.writeheader()
         for recipe_book in recipe_books:
             print(get_recipes_link_by_book(recipe_book))
