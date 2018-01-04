@@ -3,7 +3,6 @@ from django.db.transaction import atomic
 from django.core.exceptions import ObjectDoesNotExist
 
 
-path = "recipes.csv"
 @atomic
 def populate():
     print("Loading Data...")
@@ -30,7 +29,7 @@ def populate():
             tags = occ[3].strip().replace("[","").replace("]","").replace("'", "").split(",")
             cook_url = occ[4].strip()
 
-            recipe = Recipe.objects.create(title=title, image=image, recipe_Book=recipeBook)
+            recipe = Recipe.objects.create(title=title, image=image, recipe_book=recipeBook)
             for tag in tags:
                 try:
                     t = Tag.objects.get(name=tag)
@@ -38,11 +37,9 @@ def populate():
                     t = Tag.objects.create(name=tag)
                 recipe.tags.add(t)
             for ingredient in ing:
-                Ingredient.objects.create(text=ingredient, recipe=recipe)
-            for ingredient in ing:
-                print("Ingredient: " + ingredient)
-            print("---------------------------------------------------------")
+                Ingredient.objects.create(name=ingredient, recipe=recipe)
         line = file.readline()
-
+    print("Se ha populado " + Recipe.objects.count() + "recetas.")
 
 populate()
+
