@@ -36,7 +36,7 @@ def ingredients(request):
                     print ("Fallo en: " + recipe)
 
 
-            return render(request, 'recipes.html', {'recipes': recipes})
+            return render(request, 'recipes.html', {'recipes': recetario})
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
@@ -45,7 +45,6 @@ def description(request):
     if request.method == 'GET':
         id = request.GET.get('id', '')
         recipe = Recipe.objects.get(id=id)
-        print ("Receta: " + recipe.title)
         ingredients = Ingredient.objects.select_related().filter(recipe=recipe.id)
         return render(request, 'description.html', {'recipe': recipe, 'ingredients':ingredients})
     else:
