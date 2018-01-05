@@ -20,11 +20,14 @@
             {% if user.is_authenticated %}
                 <li><a class="nav-link" href="{% url 'logout' %}">Salir</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
+                <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
 
             {% else %}
                 <li><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
                 <li><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
+                <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
+
             {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0">

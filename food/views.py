@@ -5,7 +5,7 @@ import sys
 from django.shortcuts import render
 from food.forms import IngredientForm
 import contentBased.contentBased as cB
-from food.models import Recipe, Ingredient
+from food.models import Recipe, Ingredient, RecipeBook
 
 
 # Create your views here.
@@ -36,7 +36,7 @@ def ingredients(request):
                     print ("Fallo en: " + recipe)
 
 
-            return render(request, 'recipes.html', {'recipes': recipes, 'recetas':recetario})
+            return render(request, 'recipes.html', {'recipes': recipes})
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
@@ -51,3 +51,18 @@ def description(request):
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
+
+def recipe_book(request):
+    books = RecipeBook.objects.all
+    return render(request, 'recipe_book.html', {'books': books})
+
+def recipes(request):
+    try:
+        bookTitle = request.GET.get('book','')
+        book = RecipeBook.objects.get(title=bookTitle)
+        recipes = Recipe.objects.select_related().filter(recipe_book=book.id)
+        for recipe in recipes:
+            print( recipe.title)
+    except:
+        recipes = Recipe.objects.all()
+    return render(request, 'recipes.html', {'recipes': recipes})

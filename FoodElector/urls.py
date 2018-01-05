@@ -35,5 +35,7 @@ urlpatterns = [
     # FoodElector
     url(r'^ingredients/', food_views.ingredients, name="ingredients"),
     url(r'^description/$', food_views.description, name="description"),
+    url(r'^recipebook/$', food_views.recipe_book, name="recipebook"),
+    url(r'^recipes/$', food_views.recipes, name="recipes"),
 
 ]
