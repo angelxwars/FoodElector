@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', profiles_views.index, name="index"),
     url(r'^populate/$', profiles_views.Populate, name='populate'),
 
+
     # User and profile
     url(r'^login/', login, name="login"),
     url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
@@ -33,5 +34,6 @@ urlpatterns = [
 
     # FoodElector
     url(r'^ingredients/', food_views.ingredients, name="ingredients"),
+    url(r'^description/$', food_views.description, name="description"),
 
 ]

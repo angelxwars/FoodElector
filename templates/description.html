@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>{{ recipe.title }} </h1>
+
+    <img src="{{ recipe.image }}">
+
+    <h2>Necesitaremos: </h2>
+    {% for ingredient in ingredients %}
+        <p>{{ ingredient.name }}</p>
+    {% endfor %}
+
+    <a href="{{ recipe.recipe_book.link }}"> Receta</a>
+
+    <br/>
+{% endblock %}

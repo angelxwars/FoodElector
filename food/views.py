@@ -5,6 +5,7 @@ import sys
 from django.shortcuts import render
 from food.forms import IngredientForm
 import contentBased.contentBased as cB
+from food.models import Recipe, Ingredient
 
 
 # Create your views here.
@@ -14,6 +15,7 @@ def ingredients(request):
     if request.method == 'POST':
         form = IngredientForm(request.POST)
         if form.is_valid():
+            recetario = list()
             ingredients_str = form.cleaned_data.get('ingredients')
 
             # Recomender system (content based)
@@ -24,7 +26,28 @@ def ingredients(request):
             predict = content_based.predict([ingredients_str])
             recipes = predict.get('title').values
 
-            return render(request, 'recipes.html', {'recipes': recipes})
+            #Cojemos los objetos de django, para obtener la id de las recetas
+            #Tengo que repopular, porque hay recetas que no guarda
+            for recipe in recipes:
+                try:
+                    a = Recipe.objects.get(title=recipe)
+                    recetario.append(a)
+                except:
+                    print ("Fallo en: " + recipe)
+
+
+            return render(request, 'recipes.html', {'recipes': recipes, 'recetas':recetario})
+    else:
+        form = IngredientForm()
+    return render(request, 'ingredients.html', {'form': form})
+
+def description(request):
+    if request.method == 'GET':
+        id = request.GET.get('id', '')
+        recipe = Recipe.objects.get(id=id)
+        print ("Receta: " + recipe.title)
+        ingredients = Ingredient.objects.select_related().filter(recipe=recipe.id)
+        return render(request, 'description.html', {'recipe': recipe, 'ingredients':ingredients})
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
