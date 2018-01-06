@@ -21,17 +21,21 @@
                 <li><a class="nav-link" href="{% url 'logout' %}">Salir</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
                 <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
+                <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
+
 
             {% else %}
                 <li><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
                 <li><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
                 <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
+                <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
 
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Introduzca una palabra" aria-label="Buscar">
+        <form class="form-inline my-2 my-lg-0" action="/ingredients/" method="post">
+            {% csrf_token %}
+            <input name="ingredients" class="form-control mr-sm-2" type="text" placeholder="Introduzca una palabra" aria-label="Buscar">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
       </div>
@@ -43,4 +47,5 @@
     </main><!-- /.container -->
 
   </body>
+
 </html>

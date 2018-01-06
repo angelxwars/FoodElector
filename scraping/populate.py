@@ -33,9 +33,7 @@ def populate():
             recipebookTitle = occ[6].strip()
             try:
                 recipeBook = RecipeBook.objects.get(title=recipebookTitle)
-                print("Hemos recuperado, bien")
             except ObjectDoesNotExist:
-                print(recipebookTitle)
                 recipeBook = RecipeBook.objects.create(title=recipebookTitle, link=cook_url)
 
             recipe = Recipe.objects.create(title=title, image=image, recipe_book=recipeBook)

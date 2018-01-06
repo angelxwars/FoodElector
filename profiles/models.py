@@ -11,7 +11,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=50, default=None)
     last_name = models.CharField(max_length=50, default=None)
     email = models.EmailField(default=None)
-
+    searches = models.CharField(max_length=1000, default='')
 
 class Search(models.Model):
     profile = models.ForeignKey(Profile, related_name='profile', on_delete=models.CASCADE)
