@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import pandas as pd
+import datetime
 import sys
+
 from django.shortcuts import render
+
 from food.forms import IngredientForm
 import contentBased.contentBased as cB
 from food.models import Recipe, Ingredient, RecipeBook, Tag
-from profiles.models import Profile
+from profiles.models import Profile, Search
 
 
 # Create your views here.
@@ -16,12 +19,12 @@ def ingredients(request):
     if request.method == 'POST':
         form = IngredientForm(request.POST)
         busqueda = request.POST.get('ingredients', '')
-        usuario = request.user
-        user = Profile.objects.get(user__username=usuario)
-        search = user.searches
-        searchesToSet = search + ", " +  busqueda
-        setattr(user, 'searches', searchesToSet)
-        user.save()
+        user = request.user
+        profile = Profile.objects.get(user__username=user)
+        #search = user.searches
+        #searchesToSet = search + ", " + busqueda
+        #setattr(user, 'searches', searchesToSet)
+        #user.save()
         if form.is_valid():
             recetario = list()
             ingredients_str = form.cleaned_data.get('ingredients')
@@ -42,6 +45,9 @@ def ingredients(request):
                     a = Recipe.objects.filter(title=recipe)
                     receta = a[0]
                     recetario.append(a[0])
+
+            search = Search(profile=profile, tags=ingredients_str, date=datetime.date.today())
+            search.save()
             return render(request, 'recipes.html', {'recipes': recetario})
         else:
             if busqueda != '':
@@ -68,28 +74,32 @@ def ingredients(request):
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
 
+
 def description(request):
     if request.method == 'GET':
         id = request.GET.get('id', '')
         recipe = Recipe.objects.get(id=id)
         ingredients = Ingredient.objects.select_related().filter(recipe=recipe.id)
-        return render(request, 'description.html', {'recipe': recipe, 'ingredients':ingredients})
+        return render(request, 'description.html', {'recipe': recipe, 'ingredients': ingredients})
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
+
 
 def recipe_book(request):
     books = RecipeBook.objects.all
     return render(request, 'recipe_book.html', {'books': books})
 
+
 def recipes(request):
     try:
-        bookTitle = request.GET.get('book','')
+        bookTitle = request.GET.get('book', '')
         book = RecipeBook.objects.get(title=bookTitle)
         recipes = Recipe.objects.select_related().filter(recipe_book=book.id)
     except:
         recipes = Recipe.objects.all()
     return render(request, 'recipes.html', {'recipes': recipes})
+
 
 def tags(request):
     tags = Tag.objects.all
