@@ -2,16 +2,18 @@
 {% load static %}
 
 {% block content %}
-<h1>{{ recipe.title }} </h1>
+    <div class="container">
+        <h1>{{ recipe.title }} </h1>
 
-    <img src="{{ recipe.image }}">
+        <img src="{{ recipe.image }}">
 
-    <h2>Necesitaremos: </h2>
-    {% for ingredient in ingredients %}
-        <p>{{ ingredient.name }}</p>
-    {% endfor %}
+        <h2>Necesitaremos: </h2>
+        {% for ingredient in ingredients %}
+            <p>{{ ingredient.name }}</p>
+        {% endfor %}
 
-    <a href="{{ recipe.recipe_book.link }}"> Receta</a>
+        <a href="{{ recipe.recipe_book.link }}"> Receta</a>
 
-    <br/>
+        <br/>
+    </div>
 {% endblock %}
