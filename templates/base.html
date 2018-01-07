@@ -6,6 +6,10 @@
     <title>{% block title %}Food Elector{% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script type="text/javascript" src="{% static 'Js/index.js' %}"></script>
 
   </head>
   <body>
@@ -19,26 +23,29 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
-                <li><a class="nav-link" href="{% url 'logout' %}">Salir</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
                 <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
                 <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
 
 
             {% else %}
-                <li><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
-                <li><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
                 <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
                 <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
 
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-lg-0" action="/ingredients/" method="post">
-            {% csrf_token %}
-            <input name="ingredients" class="form-control mr-sm-2" type="text" placeholder="Introduzca una palabra" aria-label="Buscar">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
+      {% if user.is_authenticated  %}
+        <div id="dropdown-user" class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                {{request.user.username}}
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Ver perfil</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
+            </div>
+        </div>
+      {% endif %}
       </div>
     </nav>
 
@@ -47,9 +54,7 @@
         {% endblock %}
     </main><!-- /.container -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{% static 'Js/index.js' %}"></script>
+
   </body>
 
 
