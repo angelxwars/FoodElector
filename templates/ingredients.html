@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <div class="starter-template">
-        <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                <p>
-                    {{ field.label_tag }}<br>
-                    {{ field }}
-                    {% for error in field.errors %}
-                        <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                </p>
-            {% endfor %}
-        <button type="submit">Registrar</button>
-  </form>
-        <p>Introduzca los ingredientes que tenga en su despensa. Debe introducirlos en letra minuscula y separados
-            por un espacio. Posteriormente se le propondrá varias opciones que podrá cocinar.
-        </p>
+    <div class="container">
+        <div class="starter-template">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <p>
+                        {{ field.label_tag }}<br>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                <button type="submit">Registrar</button>
+            </form>
+            <p>Introduzca los ingredientes que tenga en su despensa. Debe introducirlos en letra minuscula y separados
+                por un espacio. Posteriormente se le propondrá varias opciones que podrá cocinar.
+            </p>
+        </div>
     </div>
 {% endblock %}

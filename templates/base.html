@@ -4,8 +4,24 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Food Elector{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <script type="text/javascript" src="{% static 'Js/index.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    <!-- icons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+
   </head>
   <body>
 
@@ -13,39 +29,43 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'index' %}">Food Elector</a>
+      <a class="navbar-brand ion-pizza" href="{% url 'index' %}">Food Elector</a>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
-                <li><a class="nav-link" href="{% url 'logout' %}">Salir</a></li>
                 <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
                 <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
                 <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
-
-
+                <li><a class="nav-link" href="{% url 'populate' %}">Popular</a></li>
             {% else %}
-                <li><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
-                <li><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
-                <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
-                <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
+                <li><a class="nav-link" href="{% url 'recipebook' %}">Recetarios</a></li>
                 <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
 
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-lg-0" action="/ingredients/" method="post">
-            {% csrf_token %}
-            <input name="ingredients" class="form-control mr-sm-2" type="text" placeholder="Introduzca una palabra" aria-label="Buscar">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
+      {% if user.is_authenticated  %}
+        <div id="dropdown-user" class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                {{request.user.username}}
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Ver perfil</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
+            </div>
+        </div>
+      {% endif %}
       </div>
     </nav>
 
-    <main class="container" style="margin-top: 100px;">
+    <main>
         {% block content %}
         {% endblock %}
     </main><!-- /.container -->
 
+
   </body>
+
+
 
 </html>

@@ -2,3 +2,4 @@
 FoodElector/__pycache__/
 *.pyc
 venv/
+FoodElector.db
