@@ -61,16 +61,23 @@ def index(request):
                 recipesPredict = predict.get('title').values
                 #vamos a añadir una recomendacion aleatoria dentro de las que nos da el algoritmo
                 numerosSugeridos=[]
-                randomNum = 0
+
                 predic = recipesPredict.tolist()
+                print("Ha saltado excepcion y esta es la lsita: " + str(predic))
                 if len(predic)>sugerencias:
+                    usados = []
                     for i in range(sugerencias):
+                        randomNum = random.randint(0,len(recipes))
                         try:
                             while randomNum in numerosSugeridos:
-                                randomNum = random.randrange(len(recipes))
+                                randomNum = random.randint(0,len(recipes))
                         except:
-                            randomNum = random.randrange(len(recipes))
+                            randomNum = random.randint(0,len(recipes))
+                        numerosSugeridos.append(randomNum)
+                        print(randomNum)
                         recipes.append(predic[randomNum])
+                        if len(numerosSugeridos)==len(predic):
+                            break
                 else:
                     recipes = predic
             recetario = []
