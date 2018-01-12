@@ -12,7 +12,7 @@ class ContentBased(object):
     Vectorizamos cada receta para conocer las mas cercanas
     """
 
-    def __init__(self, stop_words=None, token_pattern=None, metric='cosine', n_neighbors=5):
+    def __init__(self, stop_words=None, token_pattern=None, metric='cosine', n_neighbors=4):
 
         if token_pattern is None:
             token_pattern = '(?u)\\b[a-zA-Z]\\w\\w+\\b'
