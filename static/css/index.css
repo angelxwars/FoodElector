@@ -1,6 +1,7 @@
 div.container{
     max-width: 100% !important;
     margin-top: 100px;
+    width: 1500px !important;
 }
 
 div.card{
@@ -13,4 +14,20 @@ div.col-sm-6.col-md-4.col-lg-3.mt-4{
 
 #dropdown-user{
     margin-right: 20px;
+}
+
+#menu{
+    background-color: #ff5100 !important;
+}
+
+#dropdown-user{
+    background-color: #ff5100 !important;
+    border-color: #ff5100 !important;
+    cursor: pointer !important;
+}
+
+.btn{
+    background-color: white !important;
+    border-color: #ff5100 !important;
+    color: #ff5100 !important;
 }
