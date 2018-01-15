@@ -26,11 +26,17 @@ def index(request):
         search = Search.objects.filter(profile=profile)
         for cb in search:
             print("busquedas: " + str(cb))
+            annadidosB = []
         if len(search)>0:
             try: #Intentamos hacerlo con las tres ultimas busquedas, si tiene menos busquedas saltara la excepcion, y lo haremos con la unica que tenga
                 for i in range(sugerencias):
-                    print("-----------------------------------------------------------  " + str(i))
-                    s = search[i]
+                    randomNume = random.randint(0,len(search)-1)
+                    #try:
+                    if randomNume in annadidosB :
+                        while randomNume in annadidosB:
+                            randomNume = random.randint(0, len(search) - 1)
+                    annadidosB.append(randomNume)
+                    s = search[randomNume]
                     print(s.tags)
                     ingredients_str = s.tags
                     # Recomender system (content based)
@@ -63,16 +69,13 @@ def index(request):
                 numerosSugeridos=[]
 
                 predic = recipesPredict.tolist()
-                print("Ha saltado excepcion y esta es la lsita: " + str(predic))
                 if len(predic)>sugerencias:
                     usados = []
                     for i in range(sugerencias):
                         randomNum = random.randint(0,len(recipes))
-                        try:
+                        if randomNum in numerosSugeridos:
                             while randomNum in numerosSugeridos:
                                 randomNum = random.randint(0,len(recipes))
-                        except:
-                            randomNum = random.randint(0,len(recipes))
                         numerosSugeridos.append(randomNum)
                         print(randomNum)
                         recipes.append(predic[randomNum])
