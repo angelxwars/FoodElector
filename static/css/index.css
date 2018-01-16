@@ -31,3 +31,14 @@ div.col-sm-6.col-md-4.col-lg-3.mt-4{
     border-color: #ff5100 !important;
     color: #ff5100 !important;
 }
+
+#ingredients{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#description{
+    height: 900px !important;
+    width: 800px;
+    margin: 0 auto;
+}

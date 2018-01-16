@@ -3,17 +3,21 @@
 
 {% block content %}
     <div class="container">
-        <h1>{{ recipe.title }} </h1>
-
-        <img src="{{ recipe.image }}">
-
-        <h2>Necesitaremos: </h2>
-        {% for ingredient in ingredients %}
-            <p>{{ ingredient.name }}</p>
-        {% endfor %}
-
-        <a href="{{ recipe.recipe_book.link }}"> Receta</a>
-
-        <br/>
+        <div id="description" class="card">
+            <img class="card-img-top" src="{{ recipe.image }}">
+            <div class="card-block">
+                <h4 class="card-title">{{ recipe.title }}</h4>
+                <div id="ingredients">
+                <h2>Necesitaremos: </h2>
+            {% for ingredient in ingredients %}
+                <p class="card-text">{{ ingredient.name }}</p>
+            {% endfor %}
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="float-right">{{ recipe.recipe_book.title}}</span>
+            </div>
+            <a href="{{ recipe.recipe_book.link }}" class="btn btn-primary">Ver receta  </a>
+        </div>
     </div>
 {% endblock %}

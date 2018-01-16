@@ -2,14 +2,19 @@
 {% load static %}
 
 {% block content %}
+    <section class="jumbotron text-center">
+        <div class="container">
+          <div class="span3 well">
+            <center>
+                <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="{% static 'img/profile.png' %}" name="aboutme" width="140" height="140" class="img-circle"></a>
+                <h3>{{ profile.name }} {{ profile.last_name }}</h3>
+		    </center>
+        </div>
+        </div>
+    </section>
     <div class="container">
-        <h1>Perfil del usuario, {{ user.username }}</h1>
-        <ul>
-            <li><a> {{ profile.name }} </a> </li>
-            <li><a> {{ profile.last_name }} </a> </li>
-            <li><a> {{ user.date_joined }} </a> </li>
-            <li><a> {{ user.last_login }} </a> </li>
-            <li><a> {{ profile.email }} </a> </li>
-        </ul>
     </div>
+
+
+
 {% endblock %}
