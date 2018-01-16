@@ -16,38 +16,34 @@ import pandas as pd
 import random
 
 
-
-def index(request):
+"""def index(request):
     if request.user.is_authenticated:
-        sugerencias = 4
+        suggestion = 4
         recipes = []
         user = request.user
         profile = Profile.objects.get(user__username=user)
-        search = Search.objects.filter(profile=profile)
-        for cb in search:
-            print("busquedas: " + str(cb))
-            annadidosB = []
-        if len(search)>0:
+        search_profile = Search.objects.filter(profile=profile)
+        annadidosB = []
+        if len(search_profile) > 0:
             try: #Intentamos hacerlo con las tres ultimas busquedas, si tiene menos busquedas saltara la excepcion, y lo haremos con la unica que tenga
-                for i in range(sugerencias):
-                    randomNume = random.randint(0,len(search)-1)
+                for i in range(suggestion):
+                    random_num = random.randint(0, len(search_profile)-1)
                     #try:
-                    if randomNume in annadidosB :
-                        while randomNume in annadidosB:
-                            randomNume = random.randint(0, len(search) - 1)
-                    annadidosB.append(randomNume)
-                    s = search[randomNume]
-                    print(s.tags)
-                    ingredients_str = s.tags
+                    #if randomNume in annadidosB:
+                        #while randomNume in annadidosB:
+                            #randomNume = random.randint(0, len(search) - 1)
+                    annadidosB.append(random_num)
+                    search_random = search_profile[random_num]
+                    ingredients_str = search_random.tags
                     # Recomender system (content based)
                     data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
                     data.head(3)
                     content_based = cB.ContentBased()
                     content_based.fit(data, 'recipe_str')
                     predict = content_based.predict([ingredients_str])
-                    recipesPredict = predict.get('title').values
-                    reci = recipesPredict.tolist()
-                    if len(recipesPredict)>0:
+                    recipes_predict = predict.get('title').values
+                    reci = recipes_predict.tolist()
+                    if len(recipes_predict) > 0:
                         #vamos a añadir una recomendacion aleatoria dentro de las que nos da el algoritmo
                         randomNum = random.randint(0, len(reci)-1)
                         if reci:
@@ -66,20 +62,20 @@ def index(request):
                 predict = content_based.predict([ingredients_str])
                 recipesPredict = predict.get('title').values
                 #vamos a añadir una recomendacion aleatoria dentro de las que nos da el algoritmo
-                numerosSugeridos=[]
+                numerosSugeridos = []
 
                 predic = recipesPredict.tolist()
-                if len(predic)>sugerencias:
+                if len(predic) > suggestion:
                     usados = []
-                    for i in range(sugerencias):
-                        randomNum = random.randint(0,len(recipes))
+                    for i in range(suggestion):
+                        randomNum = random.randint(0, len(recipes))
                         if randomNum in numerosSugeridos:
                             while randomNum in numerosSugeridos:
-                                randomNum = random.randint(0,len(recipes))
+                                randomNum = random.randint(0, len(recipes))
                         numerosSugeridos.append(randomNum)
                         print(randomNum)
                         recipes.append(predic[randomNum])
-                        if len(numerosSugeridos)==len(predic):
+                        if len(numerosSugeridos) == len(predic):
                             break
                 else:
                     recipes = predic
@@ -92,9 +88,89 @@ def index(request):
                     a = Recipe.objects.filter(title=recipe)
                     recetario.append(a[0])
 
-            return render(request, 'index.html', {'username': request.user.username, 'recomendation':recetario})
+            return render(request, 'index.html', {'username': request.user.username, 'recomendation': recetario})
         else: #Esto seria en el caso que sea un user nuevo sin ninguna busqueda
             return render(request, 'index.html', {'username': request.user.username})
+    return render(request, 'index.html', {'username': request.user.username})"""
+
+
+def index(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            return render(request, 'index.html', {'username': request.user.username})
+        else:
+            recipes_csv = []
+            recipes = []
+            user = request.user
+            profile = Profile.objects.get(user__username=user)
+            search_profile = Search.objects.filter(profile=profile)
+            if len(search_profile) > 0:
+                if len(search_profile) == 1:
+                    random_search = search_profile[0]
+                    ingredients_str = random_search.tags
+                    # Recomender system (content based)
+                    data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
+                    data.head(3)
+                    content_based = cB.ContentBased()
+                    content_based.fit(data, 'recipe_str')
+                    predict = content_based.predict([ingredients_str])
+                    recipes_predict = predict.get('title').values
+                    recipe_list = recipes_predict.tolist()
+                    recipes_random = recipe_list
+                    recipes_csv = recipes_csv + recipes_random
+                elif len(search_profile) == 2:
+                    random_search = random.choice(search_profile)
+                    ingredients_str = random_search.tags
+                    # Recomender system (content based)
+                    data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
+                    data.head(3)
+                    content_based = cB.ContentBased()
+                    content_based.fit(data, 'recipe_str')
+                    predict = content_based.predict([ingredients_str])
+                    recipes_predict = predict.get('title').values
+                    recipe_list = recipes_predict.tolist()
+                    recipes_random = recipe_list
+                    recipes_csv = recipes_csv + recipes_random
+                elif len(search_profile) == 3 or len(search_profile) == 4:
+                    random_search = random.sample(list(search_profile), 2)
+                    for search in random_search:
+                        ingredients_str = search.tags
+                        # Recomender system (content based)
+                        data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
+                        data.head(3)
+                        content_based = cB.ContentBased()
+                        content_based.fit(data, 'recipe_str')
+                        predict = content_based.predict([ingredients_str])
+                        recipes_predict = predict.get('title').values
+                        recipe_list = recipes_predict.tolist()
+                        recipe_random = random.sample(recipe_list, 2)
+                        recipes_csv = recipes_csv + recipe_random
+                else:
+                    random_search = random.sample(list(search_profile), 4)
+                    for search in random_search:
+                        ingredients_str = search.tags
+                        # Recomender system (content based)
+                        data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
+                        data.head(3)
+                        content_based = cB.ContentBased()
+                        content_based.fit(data, 'recipe_str')
+                        predict = content_based.predict([ingredients_str])
+                        recipes_predict = predict.get('title').values
+                        recipe_list = recipes_predict.tolist()
+                        recipe_random = random.choice(recipe_list)
+                        recipes_csv.append(recipe_random)
+
+                for recipe in recipes_csv:
+                    try:
+                        a = Recipe.objects.get(title=recipe)
+                        recipes.append(a)
+                    except:
+                        a = Recipe.objects.filter(title=recipe)
+                        recipes.append(a[0])
+
+                return render(request, 'index.html', {'username': request.user.username, 'recomendation': recipes})
+            else:
+                return render(request, 'index.html', {'username': request.user.username})
     return render(request, 'index.html', {'username': request.user.username})
 
 
@@ -123,5 +199,5 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 def Populate(request):
-    numero = populate()
-    return render(request, 'populate.html', {'numero':numero})
+    number = populate()
+    return render(request, 'populate.html', {'numero': number})

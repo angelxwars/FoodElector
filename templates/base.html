@@ -34,10 +34,11 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
-                <li><a class="nav-link" href="{% url 'populate' %}">Popular db</a></li>
-                <li><a class="nav-link" href="{% url 'recipebook' %}">Recetario db</a></li>
+                {% if user.is_superuser %}
+                    <li><a class="nav-link" href="{% url 'populate' %}">Popular</a></li>
+                {% endif %}
+                <li><a class="nav-link" href="{% url 'recipebook' %}">Recetarios</a></li>
                 <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
-                <li><a class="nav-link" href="{% url 'populate' %}">Popular</a></li>
             {% else %}
                 <li><a class="nav-link" href="{% url 'recipebook' %}">Recetarios</a></li>
                 <li><a class="nav-link" href="{% url 'tags' %}">Tags</a></li>
