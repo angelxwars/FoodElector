@@ -198,6 +198,14 @@ def register(request):
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
 
-def Populate(request):
+
+def profile(request):
+    user = request.user
+    user_profile = Profile.objects.get(user__username=user)
+
+    return render(request, 'profile.html', {'user': user, 'profile': user_profile})
+
+
+def populate(request):
     number = populate()
     return render(request, 'populate.html', {'numero': number})

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h1>Perfil del usuario, {{ user.username }}</h1>
+        <ul>
+            <li><a> {{ profile.name }} </a> </li>
+            <li><a> {{ profile.last_name }} </a> </li>
+            <li><a> {{ user.date_joined }} </a> </li>
+            <li><a> {{ user.last_login }} </a> </li>
+            <li><a> {{ profile.email }} </a> </li>
+        </ul>
+    </div>
+{% endblock %}
