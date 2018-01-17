@@ -14,6 +14,7 @@ class Tag(models.Model):
 class RecipeBook(models.Model):
     title = models.CharField(max_length=50)
     link = models.URLField()
+    image = models.URLField(null=True)
 
 
 class Recipe(models.Model):

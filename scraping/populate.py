@@ -12,13 +12,11 @@ def populate():
     Tag.objects.all().delete()
     RecipeBook.objects.all().delete()
 
-    file = open("scraping/recipes.csv", "r", encoding='latin-1')
+    file = open("scraping/recipes2.csv", "r", encoding='latin-1')
     i = 0
     line = file.readline()
 
     while line:
-        print("--------------------------------------------------------------------------------------")
-        print(line)
         # El csv se esta guardando una linea en blanco, por lo que hacemos el contador para solo coger
         # las impares que tienen linea
         i = i+1
@@ -27,7 +25,6 @@ def populate():
             if i%2!=0:
                 recipebook = ""
                 occ = line.split(";")
-                print(occ)
                 title = occ[0].strip()
                 image = occ[1].strip()
                 # Elimino el primer elemento de los ingredientes ya que es un elemento en blanco,
@@ -36,11 +33,14 @@ def populate():
                 tags = occ[3].strip().replace("[", "").replace("]", "").replace("'", "").split(",")
                 cook_url = occ[4].strip()
                 recipebookTitle = occ[6].strip()
+                recipebookImg = occ[8].strip()
+
                 try:
                     recipeBook = RecipeBook.objects.get(title=recipebookTitle)
                 except ObjectDoesNotExist:
-                    recipeBook = RecipeBook.objects.create(title=recipebookTitle, link=cook_url)
+                    recipeBook = RecipeBook.objects.create(title=recipebookTitle, link=cook_url, image=recipebookImg)
 
+                print (recipebookImg)
                 recipe = Recipe.objects.create(title=title, image=image, recipe_book=recipeBook)
 
                 for tag in tags:

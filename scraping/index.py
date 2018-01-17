@@ -26,10 +26,10 @@ def get_recipe_books(url):
     for book in div_recipe_books:
         recipe_link = book.find('div').find('a').get('href')
         recipe_title = book.find('div').find('a').find(attrs={'class': 'titleLista'}).find('h2').text
-        books.append({'recipe_book_title': recipe_title, 'recipe_book_link': recipe_link})
+        recipe_picture = book.find('div').find('a').find('img')['src']
+        books.append({'recipe_book_title': recipe_title, 'recipe_book_link': recipe_link, 'recipe_book_picture': recipe_picture})
 
     return books
-
 
 # Get recipe links in a recipe_book
 
@@ -104,10 +104,10 @@ def get_information():
 def save_information_csv():
     recipe_books = get_recipe_books('http://www.recetags.com/recetarios')
     recipe_links = []
-    file = open('recipes.csv', 'w')
+    file = open('recipes2.csv', 'w')
     ordered_fieldnames = OrderedDict([('title', None), ('image', None), ('ingredients', None), ('tags', None),
                                       ('cook_url', None), ('recipe_str', None), ('recipe_book_title', None),
-                                      ('recipe_book_link', None)])
+                                      ('recipe_book_link', None), ('recipe_book_picture', None)])
     cont = 0
     with file:
         writer = csv.DictWriter(file, delimiter=';', fieldnames=ordered_fieldnames)
@@ -120,6 +120,7 @@ def save_information_csv():
                 recipe_dict = get_recipe_by_link(recipe_link)
                 recipe_dict['recipe_book_title'] = recipe_book.get('recipe_book_title')
                 recipe_dict['recipe_book_link'] = recipe_book.get('recipe_book_link')
+                recipe_dict['recipe_book_picture'] = recipe_book.get('recipe_book_picture')
                 writer.writerow(recipe_dict)
                 cont += 1
 
