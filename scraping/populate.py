@@ -12,7 +12,7 @@ def populate():
     Tag.objects.all().delete()
     RecipeBook.objects.all().delete()
 
-    file = open("scraping/recipes2.csv", "r", encoding='latin-1')
+    file = open("scraping/recipes.csv", "r", encoding='latin-1')
     i = 0
     line = file.readline()
 
@@ -40,7 +40,7 @@ def populate():
                 except ObjectDoesNotExist:
                     recipeBook = RecipeBook.objects.create(title=recipebookTitle, link=cook_url, image=recipebookImg)
 
-                print (recipebookImg)
+                print(recipebookImg)
                 recipe = Recipe.objects.create(title=title, image=image, recipe_book=recipeBook)
 
                 for tag in tags:
@@ -49,7 +49,6 @@ def populate():
                     except ObjectDoesNotExist:
                         t = Tag.objects.create(name=tag)
                     recipe.tags.add(t)
-
                 for ingredient in ing:
                     Ingredient.objects.create(name=ingredient, recipe=recipe)
         line = file.readline()

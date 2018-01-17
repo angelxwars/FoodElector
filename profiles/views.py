@@ -154,6 +154,6 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 
-def populate(request):
+def populate2(request):
     number = populate()
     return render(request, 'populate.html', {'number': number})

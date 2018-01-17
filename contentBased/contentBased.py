@@ -1,5 +1,5 @@
 import pandas as pd
-import stop_words as stopwords
+#import stop_words as stopwords
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
