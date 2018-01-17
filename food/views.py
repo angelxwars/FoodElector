@@ -111,3 +111,18 @@ def tag(request):
     tagName = request.GET.get('name', '')
     recipes = Recipe.objects.filter(tags__name=tagName)
     return render(request, 'recipes.html', {'recipes': recipes})
+
+def annadirfavoritos(request):
+    recipetitle = request.GET.get('title', '')
+    recipe = Recipe.objects.filter(title=recipetitle)
+    user = request.user
+    profile = Profile.objects.get(user__username=user)
+    profile.recipes.add(recipe[0])
+    recipes = profile.recipes.all()
+    return render(request, 'favoritos.html', {'recipes': recipes})
+
+def favorites(request):
+    user = request.user
+    profile = Profile.objects.get(user__username=user)
+    favoritos = profile.recipes.all()
+    return render(request, 'favoritos.html', {'recipes': favoritos})

@@ -11,6 +11,9 @@ div.card{
 div.col-sm-6.col-md-4.col-lg-3.mt-4{
     height: 500px;
 }
+div.tag{
+    height: 50px;
+}
 h4.card-title{
     margin-top: 20px;
     margin-left: 20px;

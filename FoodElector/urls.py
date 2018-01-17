@@ -43,4 +43,6 @@ urlpatterns = [
     url(r'^recipes/$', food_views.recipes, name="recipes"),
     url(r'^tags/$', food_views.tags, name="tags"),
     url(r'^tag/$', food_views.tag, name="tag"),
+    url(r'^addfavorite/', food_views.annadirfavoritos, name="addfavorite"),
+    url(r'^favorites/', food_views.favorites, name="favorites"),
 ]

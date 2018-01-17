@@ -7,7 +7,7 @@
         <ul>
             <div class="row">
             {% for tag in tags %}
-                <div class="card col-xs-6" style="width: 300px">
+                <div class="tag" style="width: 300px">
                     <li><a href="/tag?name={{ tag.name }}"> {{ tag.name }} </a> </li>
                 </div>
             {% endfor %}
