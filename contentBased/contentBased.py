@@ -1,5 +1,5 @@
 import pandas as pd
-#import stop_words as stopwords
+import stop_words as stopwords
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
@@ -24,7 +24,7 @@ class ContentBased(object):
         """
         Entrenamos el modelo:
         1- Vectorizamos cada receta
-        2- Calculamos las recetas mas cercanos
+        2- Calculamos las recetas mas cercanas
         """
         self.datos = datos
         datos_por_tags = self.tfidf_vectorizer.fit_transform(datos[columna_descripcion].values.astype('U'))

@@ -2,19 +2,40 @@
 {% load static %}
 
 {% block content %}
-    <section class="jumbotron text-center">
+    <section class="jumbotron text-center" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <div class="container">
           <div class="span3 well">
-            <center>
+            <br>
                 <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="{% static 'img/profile.png' %}" name="aboutme" width="140" height="140" class="img-circle"></a>
-                <h3>{{ profile.name }} {{ profile.last_name }}</h3>
+                <h3>{{ profile.name }} {{ profile.last_name }}</h3><br>
+                <div id="user-data">
+                    <h4><strong>Datos del Usuario: </strong></h4>
+                    <br>
+                    <a><strong>Usuario: </strong>{{ user.username }}</a><br>
+                    <a><strong>Email: </strong>{{ profile.email }}</a><br>
+                </div>
+                <br>
+                <br>
+                <div id="user-search">
+                    <h4><strong>Últimas búsquedas del usuario</strong></h4>
+                    <br>
+                    <table>
+                        {% for search in searches %}
+                            <tr>
+                                <td>{{ search.tags }}</td>
+                                <td style="padding-left: 100px">{{ search.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
 		    </center>
         </div>
         </div>
     </section>
     <div class="container">
-    </div>
 
+    </div>
 
 
 {% endblock %}

@@ -53,3 +53,14 @@ h4.card-title{
     margin: 0 auto;
     margin-bottom: 100px;
 }
+
+#user-data{
+    text-align: left;
+    margin-left: 30%;
+}
+
+#user-search{
+    text-align: left;
+    margin-left: 30%;
+}
+
