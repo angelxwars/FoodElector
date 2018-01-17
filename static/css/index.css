@@ -89,4 +89,12 @@ h4.card-title{
     margin-left: 200px;
 }
 
+#register-form > div > input{
+    width: 100%;
+}
+
+#form-container{
+    width: 700px;
+    margin: 0 auto;
+}
 

@@ -151,8 +151,6 @@ def profile(request):
     else:
         user_last_searches = list(reversed(user_searches[len(user_searches)-5: len(user_searches)]))
 
-    for search in user_searches:
-        print(search.date)
     context = {
         'user': user,
         'profile': user_profile,
