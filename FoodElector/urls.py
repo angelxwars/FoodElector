@@ -15,22 +15,25 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import logout
 from FoodElector import settings
 
 from profiles import views as profiles_views
 from food import views as food_views
 
 urlpatterns = [
+
+    # General
     url(r'^admin/', admin.site.urls),
     url(r'^$', profiles_views.index, name="index"),
-    url(r'^populate/$', profiles_views.Populate, name='populate'),
-
+    url(r'^populate/$', profiles_views.populate, name='populate'),
 
     # User and profile
-    url(r'^login/', login, name="login"),
+    url(r'^login/', profiles_views.login_view, name="login"),
     url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^register/$', profiles_views.register, name='register'),
+    url(r'^profile/$', profiles_views.profile, name='profile'),
+
 
     # FoodElector
     url(r'^ingredients/', food_views.ingredients, name="ingredients"),

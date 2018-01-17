@@ -4,62 +4,50 @@
 
 
     {% if user.is_authenticated  %}
-        <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Hola de nuevo, {{request.user.username}}</h1>
-          <p class="lead text-muted">¿Que ingredientes tienes hoy?<p>
-            <a href="{% url 'ingredients' %}" class="btn btn-primary">Elegir ingredientes</a>
-          </p>
-        </div>
-        </section>
-
-          <div class="album text-muted">
+        {% if user.is_superuser  %}
+            <section class="jumbotron text-center">
             <div class="container">
+                <h1 class="jumbotron-heading">Hola de nuevo administrador, {{request.user.username}}</h1>
+                <p class="lead text-muted">Desde aquí podrás popular la base de datos<p>
+                <a id="login" class="btn btn-primary ion-upload" href="{% url 'populate' %}">Popular Base de Datos</a>
+                </p>
+            </div>
+            </section>
+        {% else %}
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="jumbotron-heading">Hola de nuevo, {{request.user.username}}</h1>
+                    <p class="lead text-muted">¿Que ingredientes tienes hoy?<p>
+                    <a href="{% url 'ingredients' %}" class="btn btn-primary">Elegir ingredientes</a>
+                    </p>
+                </div>
+            </section>
 
-              <div class="row">
-                  {% for recipe in recomendation %}
-                <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ recipe.image }}">
-                        <div class="card-block">
-                            <h4 class="card-title">{{ recipe.title }}</h4>
+            <div class="album text-muted">
+                <div class="container">
+
+                    <div class="row">
+                    {% for recipe in recomendation %}
+                        <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ recipe.image }}">
+                                <div class="card-block">
+                                    <h4 class="card-title">{{ recipe.title }}</h4>
+                                </div>
+                                <div class="card-footer">
+                                    <span class="float-right">{{ recipe.recipe_book.title}}</span>
+                                </div>
+                                <a href="/description?id={{ recipe.id }}" class="btn btn-primary">Ver receta  </a>
+                            </div>
                         </div>
-                        <div class="card-footer">
-                            <span class="float-right">{{ recipe.recipe_book.title}}</span>
-                        </div>
-                        <a href="/description?id={{ recipe.id }}" class="btn btn-primary">Ver receta  </a>
+                    {% endfor %}
                     </div>
                 </div>
-                  {% endfor %}
-              </div>
-
             </div>
-          </div>
+        {% endif %}
+
     {% else %}
-        <!-- Modals -->
-        <div class="modal fade" id="modal-login" role="dialog" style="display: none;">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit">Entrar</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="cancel-login" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button id="enter-login" type="submit" class="btn btn-primary">Entrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading">Bienvenido a Food Elector</h1>

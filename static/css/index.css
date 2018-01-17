@@ -11,6 +11,10 @@ div.card{
 div.col-sm-6.col-md-4.col-lg-3.mt-4{
     height: 500px;
 }
+h4.card-title{
+    margin-top: 20px;
+    margin-left: 20px;
+}
 
 #dropdown-user{
     margin-right: 20px;
@@ -31,3 +35,36 @@ div.col-sm-6.col-md-4.col-lg-3.mt-4{
     border-color: #ff5100 !important;
     color: #ff5100 !important;
 }
+.btn:hover{
+    background-color: #ff5100 !important;
+    border-color: #ff5100 !important;
+    color: white !important;
+}
+
+#ingredients{
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+#description{
+    height: auto;
+    width: 800px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+
+#user-data{
+    text-align: left;
+    margin-left: 30%;
+}
+
+#user-search{
+    text-align: left;
+    margin-left: 30%;
+}
+
+#section-profile{
+    height: complex;
+}
+

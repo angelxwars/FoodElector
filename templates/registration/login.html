@@ -5,10 +5,17 @@
 {% block content %}
     <div class="container">
       <h2>Entrar</h2>
-      <form method="post">
+        {% if error %}
+            <a style="color: red">{{ error }}</a>
+        {% endif %}
+      <form id="login-form" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Entrar</button>
+        {% for field in form %}
+            <div class="form-group">
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Entrar</button>
       </form>
     </div>
 {% endblock %}
