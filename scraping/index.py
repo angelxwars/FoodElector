@@ -31,6 +31,7 @@ def get_recipe_books(url):
 
     return books
 
+
 # Get recipe links in a recipe_book
 
 def get_recipes_link_by_book(book):
