@@ -5,19 +5,22 @@
     <div class="container">
         <div id="description" class="card">
             <img class="card-img-top" src="{{ recipe.image }}">
-            <div class="card-block">
-                <h4 class="card-title">{{ recipe.title }}</h4>
+            <div class="card-body">
+                <!--Title-->
+                <h4 class="card-title"><strong>{{ recipe.title }}</strong></h4>
+                <!--Text-->
                 <div id="ingredients">
-                <h2>Necesitaremos: </h2>
+                    <a><strong>Necesitaremos: </strong></a>
             {% for ingredient in ingredients %}
                 <p class="card-text">{{ ingredient.name }}</p>
             {% endfor %}
                 </div>
+
             </div>
             <div class="card-footer">
                 <span class="float-right">{{ recipe.recipe_book.title}}</span>
             </div>
-            <a href="{{ recipe.recipe_book.link }}" class="btn btn-primary">Ver receta  </a>
+            <a href="{{ recipe.recipe_book.link }}" class="btn btn-primary">Ver en la página original</a>
         </div>
     </div>
 {% endblock %}
