@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.views import View
 from django.contrib.auth import login, authenticate, logout
 
-from profiles.forms import RegisterForm
+from profiles.forms import RegisterForm, LoginForm
 from profiles.models import Profile, Search
 from scraping.populate import populate
 from food.models import Recipe
@@ -97,6 +97,24 @@ def index(request):
                 return render(request, 'index.html', {'username': request.user.username})
     return render(request, 'index.html', {'username': request.user.username})
 
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect(index)
+            else:
+                form = LoginForm()
+                return render(request, 'registration/login.html', {'form': form, 'error': 'Datos incorrectos, vuelva a introducirlos'})
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
