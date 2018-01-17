@@ -4,18 +4,21 @@
 
 {% block content %}
     <div class="container">
-      <h2>Entrar</h2>
-        {% if error %}
-            <a style="color: red">{{ error }}</a>
-        {% endif %}
-      <form id="login-form" method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                {{ field }}
-            </div>
-        {% endfor %}
-        <button class="btn btn-primary" type="submit">Entrar</button>
-      </form>
+        <div>
+          <h2>Entrar</h2>
+            {% if error %}
+                <a style="color: red">{{ error }}</a>
+            {% endif %}
+          <form id="login-form" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}</label><br>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit">Entrar</button>
+          </form>
+        </div>
     </div>
 {% endblock %}

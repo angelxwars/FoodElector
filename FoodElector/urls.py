@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^register/$', profiles_views.register, name='register'),
     url(r'^profile/$', profiles_views.profile, name='profile'),
+    url(r'^search/$', profiles_views.search, name='search'),
 
 
     # FoodElector

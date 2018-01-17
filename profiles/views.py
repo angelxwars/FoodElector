@@ -116,6 +116,7 @@ def login_view(request):
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -145,13 +146,47 @@ def profile(request):
     user = request.user
     user_profile = Profile.objects.get(user__username=user)
     user_searches = list(Search.objects.filter(profile=user_profile))
-    user_last_searches = reversed(user_searches[len(user_searches)-6:len(user_searches)])
+    if len(user_searches) < 5:
+        user_last_searches = list(reversed(user_searches))
+    else:
+        user_last_searches = list(reversed(user_searches[len(user_searches)-5: len(user_searches)]))
+
+    for search in user_searches:
+        print(search.date)
     context = {
         'user': user,
         'profile': user_profile,
         'searches': user_last_searches}
 
     return render(request, 'profile.html', context)
+
+
+def search(request):
+    if request.method == 'GET':
+        search_id = request.GET.get('id', '')
+        user_search = Search.objects.get(id=search_id)
+        ingredients_str = user_search.tags
+        # Recomender system (content based)
+        data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
+        data.head(3)
+        content_based = cB.ContentBased()
+        content_based.fit(data, 'recipe_str')
+        predict = content_based.predict([ingredients_str])
+        recipes_predict = predict.get('title').values
+        recipe_list_predict = recipes_predict.tolist()
+        recipes = []
+        for recipe in recipe_list_predict:
+            queryset_list = Recipe.objects.filter(title=recipe)
+            if queryset_list.count() != 0:
+                recipes = recipes + list(queryset_list)
+
+        if len(recipes) > 4:
+            recipes_temp = recipes
+            recipes = recipes_temp[0:3]
+
+        return render(request, 'recipes.html', {'recipes': recipes})
+    else:
+        return redirect(index)
 
 
 def populate(request):

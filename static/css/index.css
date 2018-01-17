@@ -77,7 +77,11 @@ h4.card-title{
     width: 100%;
 }
 
-#ingredients-form > a{
+#login-form > div > input{
+    width: 100%;
+}
+
+#ingredients-form > button{
     width: 300px;
     margin-left: 200px;
 }
