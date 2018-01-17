@@ -68,3 +68,18 @@ h4.card-title{
     height: complex;
 }
 
+#select-ingredients{
+    width: 700px;
+    margin: 0 auto;
+}
+
+#ingredients-form > input{
+    width: 100%;
+}
+
+#ingredients-form > a{
+    width: 300px;
+    margin-left: 200px;
+}
+
+
