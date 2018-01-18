@@ -47,7 +47,8 @@ def populate():
                     try:
                         t = Tag.objects.get(name=tag)
                     except ObjectDoesNotExist:
-                        t = Tag.objects.create(name=tag)
+                        if tag != "":
+                            t = Tag.objects.create(name=tag)
                     recipe.tags.add(t)
                 for ingredient in ing:
                     Ingredient.objects.create(name=ingredient, recipe=recipe)
