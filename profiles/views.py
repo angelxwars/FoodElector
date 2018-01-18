@@ -187,6 +187,6 @@ def search(request):
         return redirect(index)
 
 
-def populate(request):
+def populatedb(request):
     number = populate()
     return render(request, 'populate.html', {'number': number})

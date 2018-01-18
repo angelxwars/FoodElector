@@ -99,4 +99,4 @@ def favourites(request):
     user = request.user
     profile = Profile.objects.get(user__username=user)
     favourites_recipes = profile.recipes.all()
-    return render(request, 'favourites.html', {'favourites': favourites_recipes})
+    return render(request, 'favourites.html', {'recipes': favourites_recipes})

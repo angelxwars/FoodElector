@@ -26,7 +26,7 @@ urlpatterns = [
     # General
     url(r'^admin/', admin.site.urls),
     url(r'^$', profiles_views.index, name="index"),
-    url(r'^populate/$', profiles_views.populate, name='populate'),
+    url(r'^populate/$', profiles_views.populatedb, name='populate'),
 
     # User and profile
     url(r'^login/', profiles_views.login_view, name="login"),
