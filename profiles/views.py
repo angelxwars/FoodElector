@@ -70,8 +70,11 @@ def index(request):
                         recipes_csv = recipes_csv + recipe_random
                 else:
                     random_search = random.sample(list(search_profile), 4)
+                    print(search_profile)
                     for search in random_search:
                         ingredients_str = search.tags
+                        print(ingredients_str)
+
                         # Recomender system (content based)
                         data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";",
                                            encoding='latin-1')
@@ -187,6 +190,6 @@ def search(request):
         return redirect(index)
 
 
-def populate(request):
+def populatedb(request):
     number = populate()
     return render(request, 'populate.html', {'number': number})

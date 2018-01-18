@@ -33,21 +33,22 @@ def populate():
                 tags = occ[3].strip().replace("[", "").replace("]", "").replace("'", "").split(",")
                 cook_url = occ[4].strip()
                 recipebookTitle = occ[6].strip()
+                recipebookLink = occ[7].strip()
                 recipebookImg = occ[8].strip()
 
                 try:
                     recipeBook = RecipeBook.objects.get(title=recipebookTitle)
                 except ObjectDoesNotExist:
-                    recipeBook = RecipeBook.objects.create(title=recipebookTitle, link=cook_url, image=recipebookImg)
+                    recipeBook = RecipeBook.objects.create(title=recipebookTitle, link=recipebookLink, image=recipebookImg)
 
-                print(recipebookImg)
-                recipe = Recipe.objects.create(title=title, image=image, recipe_book=recipeBook)
+                recipe = Recipe.objects.create(title=title, image=image,link=cook_url, recipe_book=recipeBook)
 
                 for tag in tags:
                     try:
                         t = Tag.objects.get(name=tag)
                     except ObjectDoesNotExist:
-                        t = Tag.objects.create(name=tag)
+                        if tag != "":
+                            t = Tag.objects.create(name=tag)
                     recipe.tags.add(t)
                 for ingredient in ing:
                     Ingredient.objects.create(name=ingredient, recipe=recipe)

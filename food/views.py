@@ -24,8 +24,6 @@ def ingredients(request):
             ingredients_str = form.cleaned_data.get('ingredients')
             recetario = Recipe.objects.filter(ingredient__name__contains=ingredients_str)
 
-            search = Search(profile=profile, tags=ingredients_str, date=datetime.date.today())
-            search.save()
             # Recomender system (content based)
             data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";", encoding='latin-1')
             data.head(3)
@@ -33,14 +31,12 @@ def ingredients(request):
             content_based.fit(data, 'recipe_str')
             predict = content_based.predict([ingredients_str])
             recipes_predict = predict.get('title').values
+            if len(recipes_predict)>0:
+                search = Search(profile=profile, tags=ingredients_str, date=datetime.date.today())
+                search.save()
             for recipe in recipes_predict:
-                try:
-                    a = Recipe.objects.get(title=recipe)
-                    ingredients_recipes.append(a)
-                except:
-                    a = Recipe.objects.filter(title=recipe)
-                    ingredients_recipes.append(a[0])
-
+                a = Recipe.objects.filter(title=recipe)
+                ingredients_recipes.append(a[0])
             return render(request, 'recipes.html', {'recipes': ingredients_recipes})
 
     else:
@@ -99,4 +95,4 @@ def favourites(request):
     user = request.user
     profile = Profile.objects.get(user__username=user)
     favourites_recipes = profile.recipes.all()
-    return render(request, 'favourites.html', {'favourites': favourites_recipes})
+    return render(request, 'favourites.html', {'recipes': favourites_recipes})

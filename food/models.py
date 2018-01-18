@@ -21,6 +21,7 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     image = models.URLField()
     tags = models.ManyToManyField(Tag)
+    link = models.URLField(null=True)
     recipe_book = models.ForeignKey(RecipeBook, on_delete=models.CASCADE)
 
 
