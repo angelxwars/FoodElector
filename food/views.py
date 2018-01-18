@@ -34,13 +34,8 @@ def ingredients(request):
             predict = content_based.predict([ingredients_str])
             recipes_predict = predict.get('title').values
             for recipe in recipes_predict:
-                try:
-                    a = Recipe.objects.get(title=recipe)
-                    ingredients_recipes.append(a)
-                except:
-                    a = Recipe.objects.filter(title=recipe)
-                    ingredients_recipes.append(a[0])
-
+                a = Recipe.objects.filter(title=recipe)
+                ingredients_recipes.append(a[0])
             return render(request, 'recipes.html', {'recipes': ingredients_recipes})
 
     else:

@@ -38,8 +38,9 @@ def index(request):
                     predict = content_based.predict([ingredients_str])
                     recipes_predict = predict.get('title').values
                     recipe_list = recipes_predict.tolist()
-                    recipes_random = recipe_list
-                    recipes_csv = recipes_csv + recipes_random
+                    if recipe_list:
+                        recipes_random = recipe_list
+                        recipes_csv = recipes_csv + recipes_random
                 elif len(search_profile) == 2:
                     random_search = random.choice(search_profile)
                     ingredients_str = random_search.tags
@@ -51,8 +52,9 @@ def index(request):
                     predict = content_based.predict([ingredients_str])
                     recipes_predict = predict.get('title').values
                     recipe_list = recipes_predict.tolist()
-                    recipes_random = recipe_list
-                    recipes_csv = recipes_csv + recipes_random
+                    if recipe_list:
+                        recipes_random = recipe_list
+                        recipes_csv = recipes_csv + recipes_random
                 elif len(search_profile) == 3 or len(search_profile) == 4:
                     random_search = random.sample(list(search_profile), 2)
                     for search in random_search:
@@ -66,12 +68,16 @@ def index(request):
                         predict = content_based.predict([ingredients_str])
                         recipes_predict = predict.get('title').values
                         recipe_list = recipes_predict.tolist()
-                        recipe_random = random.sample(recipe_list, 2)
-                        recipes_csv = recipes_csv + recipe_random
+                        if recipe_list:
+                            recipe_random = random.sample(recipe_list, 2)
+                            recipes_csv = recipes_csv + recipe_random
                 else:
                     random_search = random.sample(list(search_profile), 4)
+                    print(search_profile)
                     for search in random_search:
                         ingredients_str = search.tags
+                        print(ingredients_str)
+
                         # Recomender system (content based)
                         data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";",
                                            encoding='latin-1')
@@ -81,8 +87,9 @@ def index(request):
                         predict = content_based.predict([ingredients_str])
                         recipes_predict = predict.get('title').values
                         recipe_list = recipes_predict.tolist()
-                        recipe_random = random.choice(recipe_list)
-                        recipes_csv.append(recipe_random)
+                        if recipe_list:
+                            recipe_random = random.choice(recipe_list)
+                            recipes_csv.append(recipe_random)
 
                 for recipe in recipes_csv:
                     try:
