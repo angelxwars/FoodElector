@@ -116,6 +116,7 @@ h4.card-title{
 }
 
 #form-container{
+    margin-top: 100px !important;
     width: 700px;
     margin: 0 auto;
 }
@@ -133,5 +134,9 @@ h4.card-title{
 }
 
 #recipes{
+    margin-top: 100px;
+}
+
+#login-container{
     margin-top: 100px;
 }
