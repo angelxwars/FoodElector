@@ -63,8 +63,6 @@ h4.card-title{
     color: white !important;
 }
 
-
-
 #ingredients{
     margin-left: 20px;
     margin-bottom: 20px;
@@ -138,5 +136,9 @@ h4.card-title{
 }
 
 #login-container{
+    margin-top: 100px;
+}
+
+#recipe-book{
     margin-top: 100px;
 }
