@@ -19,14 +19,20 @@
                 <div id="user-search">
                     <h4><strong>Últimas búsquedas del usuario</strong></h4>
                     <br>
-                    <table>
+                    {% if searches|length == 0 %}
+                        <p>El usuario no a realizado ninguna busqueda hasta el momento</p>
+                    {% else %}
+                        <table>
                         {% for search in searches %}
                             <tr>
                                 <td>{{ search.tags }}</td>
                                 <td style="padding-left: 100px">{{ search.date }}</td>
+                                <td style="padding-left: 100px"><a href="/search?id={{ search.id }}" class="btn btn-primary">Volver a buscar </a></td>
                             </tr>
                         {% endfor %}
-                    </table>
+                        </table>
+                    {% endif %}
+
 
                 </div>
 		    </center>

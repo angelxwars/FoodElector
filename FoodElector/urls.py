@@ -26,13 +26,14 @@ urlpatterns = [
     # General
     url(r'^admin/', admin.site.urls),
     url(r'^$', profiles_views.index, name="index"),
-    url(r'^populate/$', profiles_views.populate2, name='populate'),
+    url(r'^populate/$', profiles_views.populate, name='populate'),
 
     # User and profile
     url(r'^login/', profiles_views.login_view, name="login"),
     url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^register/$', profiles_views.register, name='register'),
     url(r'^profile/$', profiles_views.profile, name='profile'),
+    url(r'^search/$', profiles_views.search, name='search'),
 
 
     # FoodElector
@@ -42,6 +43,6 @@ urlpatterns = [
     url(r'^recipes/$', food_views.recipes, name="recipes"),
     url(r'^tags/$', food_views.tags, name="tags"),
     url(r'^tag/$', food_views.tag, name="tag"),
-    url(r'^addfavorite/', food_views.annadirfavoritos, name="addfavorite"),
-    url(r'^favorites/', food_views.favorites, name="favorites"),
+    url(r'^add_favourite/', food_views.add_favourite, name="add_favourite"),
+    url(r'^favourites/', food_views.favourites, name="favourites"),
 ]

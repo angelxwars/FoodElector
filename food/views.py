@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 import pandas as pd
 import datetime
-import sys
 
 from django.shortcuts import render
 
@@ -14,19 +13,14 @@ from profiles.models import Profile, Search
 
 # Create your views here.
 
-
 def ingredients(request):
     if request.method == 'POST':
         form = IngredientForm(request.POST)
-        busqueda = request.POST.get('ingredients', '')
         user = request.user
         profile = Profile.objects.get(user__username=user)
-        #search = user.searches
-        #searchesToSet = search + ", " + busqueda
-        #setattr(user, 'searches', searchesToSet)
-        #user.save()
+
         if form.is_valid():
-            recipes = list()
+            ingredients_recipes = list()
             ingredients_str = form.cleaned_data.get('ingredients')
             recetario = Recipe.objects.filter(ingredient__name__contains=ingredients_str)
 
@@ -39,38 +33,16 @@ def ingredients(request):
             content_based.fit(data, 'recipe_str')
             predict = content_based.predict([ingredients_str])
             recipes_predict = predict.get('title').values
-            #Cojemos los objetos de django, para obtener la id de las recetas
-            #Tengo que repopular, porque hay recetas que no guarda
             for recipe in recipes_predict:
                 try:
                     a = Recipe.objects.get(title=recipe)
-                    recipes.append(a)
+                    ingredients_recipes.append(a)
                 except:
                     a = Recipe.objects.filter(title=recipe)
-                    recipes.append(a[0])
+                    ingredients_recipes.append(a[0])
 
-            return render(request, 'recipes.html', {'recipes': recipes})
-        else:
-            if busqueda != '':
-                recetario = list()
-                ingredients_str = busqueda
-                # Recomender system (content based)
-                data = pd.read_csv('scraping/recipes.csv', error_bad_lines=False, delimiter=";")
-                data.head(3)
-                content_based = cB.ContentBased()
-                content_based.fit(data, 'recipe_str')
-                predict = content_based.predict([ingredients_str])
-                recipes = predict.get('title').values
-                # Cojemos los objetos de django, para obtener la id de las recetas
-                # Tengo que repopular, porque hay recetas que no guarda
-                for recipe in recipes:
-                    try:
-                        a = Recipe.objects.get(title=recipe)
-                        recetario.append(a)
-                    except:
-                        a = Recipe.objects.filter(title=recipe)
-                        recetario.append(a[0])
-                return render(request, 'recipes.html', {'recipes': recetario})
+            return render(request, 'recipes.html', {'recipes': ingredients_recipes})
+
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
@@ -78,10 +50,10 @@ def ingredients(request):
 
 def description(request):
     if request.method == 'GET':
-        id = request.GET.get('id', '')
-        recipe = Recipe.objects.get(id=id)
-        ingredients = Ingredient.objects.select_related().filter(recipe=recipe.id)
-        return render(request, 'description.html', {'recipe': recipe, 'ingredients': ingredients})
+        recipe_id = request.GET.get('id', '')
+        recipe = Recipe.objects.get(id=recipe_id)
+        recipe_ingredients = Ingredient.objects.select_related().filter(recipe=recipe.id)
+        return render(request, 'description.html', {'recipe': recipe, 'ingredients': recipe_ingredients})
     else:
         form = IngredientForm()
     return render(request, 'ingredients.html', {'form': form})
@@ -94,35 +66,37 @@ def recipe_book(request):
 
 def recipes(request):
     try:
-        bookTitle = request.GET.get('book', '')
-        book = RecipeBook.objects.get(title=bookTitle)
-        recipes = Recipe.objects.select_related().filter(recipe_book=book.id)
+        book_title = request.GET.get('book', '')
+        book = RecipeBook.objects.get(title=book_title)
+        book_recipes = Recipe.objects.select_related().filter(recipe_book=book.id)
     except:
-        recipes = Recipe.objects.all()
-    return render(request, 'recipes.html', {'recipes': recipes})
+        book_recipes = Recipe.objects.all()
+    return render(request, 'recipes.html', {'recipes': book_recipes})
 
 
 def tags(request):
-    tags = Tag.objects.all
-    return render(request, 'tags.html', {'tags': tags})
+    all_tags = Tag.objects.all
+    return render(request, 'tags.html', {'tags': all_tags})
 
 
 def tag(request):
-    tagName = request.GET.get('name', '')
-    recipes = Recipe.objects.filter(tags__name=tagName)
-    return render(request, 'recipes.html', {'recipes': recipes})
+    tag_name = request.GET.get('name', '')
+    tag_recipes = Recipe.objects.filter(tags__name=tag_name)
+    return render(request, 'recipes.html', {'recipes': tag_recipes})
 
-def annadirfavoritos(request):
-    recipetitle = request.GET.get('title', '')
-    recipe = Recipe.objects.filter(title=recipetitle)
+
+def add_favourite(request):
+    recipe_title = request.GET.get('title', '')
+    recipe = Recipe.objects.filter(title=recipe_title)
     user = request.user
     profile = Profile.objects.get(user__username=user)
     profile.recipes.add(recipe[0])
-    recipes = profile.recipes.all()
-    return render(request, 'favoritos.html', {'recipes': recipes})
+    favourites_recipes = profile.recipes.all()
+    return render(request, 'favourites.html', {'recipes': favourites_recipes})
 
-def favorites(request):
+
+def favourites(request):
     user = request.user
     profile = Profile.objects.get(user__username=user)
-    favoritos = profile.recipes.all()
-    return render(request, 'favoritos.html', {'recipes': favoritos})
+    favourites_recipes = profile.recipes.all()
+    return render(request, 'favourites.html', {'favourites': favourites_recipes})
