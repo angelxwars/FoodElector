@@ -1,11 +1,11 @@
 div.container{
     max-width: 100% !important;
-    margin-top: 100px;
+    margin-top: 50px;
     width: 1500px !important;
 }
 
 div.card{
-    height: 670px;
+    height: 600px;
 }
 
 div.col-sm-6.col-md-4.col-lg-3.mt-4{
@@ -20,13 +20,13 @@ h4.card-title{
 }
 
 .footer {
-    max-width: 100% !important;
-    margin-top: 100px;
     position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    height: 100px;
-    background-color: #ff5100;
-    color: #000000;
+    height: 30px;
+    background-color: orange;
+    color: white;
     text-align: center;
 }
 
@@ -93,6 +93,7 @@ h4.card-title{
 }
 
 #select-ingredients{
+    margin-top: 100px !important;
     width: 700px;
     margin: 0 auto;
 }
@@ -119,3 +120,18 @@ h4.card-title{
     margin: 0 auto;
 }
 
+#tags{
+    margin-top: 100px;
+}
+
+#favourites{
+    margin-top: 100px;
+}
+
+#tags > ul{
+    margin-top: 40px;
+}
+
+#recipes{
+    margin-top: 100px;
+}

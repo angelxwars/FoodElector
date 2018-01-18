@@ -3,39 +3,33 @@
 
 {% block content %}
     <div class="container">
-<<<<<<< HEAD:templates/favoritos.html
-        <h1>Tus recetas favoritas: </h1>
+        <div id="favourites">
+            <h1>Tus recetas favoritas</h1>
             <br/>
             <br/>
+            {% if recipes|length == 0 %}
+                <p>El usuario no tiene ninguna receta favorita hasta el momento</p>
+            {% else %}
             <ul>
                 <div class="row">
-=======
-        <h1>Tus recetas favoritas</h1>
-        <br/>
-        <br/>
-        {% if recipes|length == 0 %}
-            <p>El usuario no tiene ninguna receta favorita hasta el momento</p>
-        {% else %}
-        <ul>
-            <div class="row">
->>>>>>> 37a8d7cfbadc4b6a811fde747e47f6c3563597d1:templates/favourites.html
-                {% for recipe in recipes %}
-                    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
-                            <div class="card">
-                                <img class="card-img-top" src="{{ recipe.image }}">
-                                <div class="card-block">
-                                    <h4 class="card-title">{{ recipe.title }}</h4>
+                    {% for recipe in recipes %}
+                        <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="{{ recipe.image }}">
+                                    <div class="card-block">
+                                        <h4 class="card-title">{{ recipe.title }}</h4>
+                                    </div>
+                                    <div class="card-footer">
+                                        <span class="float-right">{{ recipe.recipe_book.title}}</span>
+                                    </div>
+                                    <a href="/description?id={{ recipe.id }}" class="btn btn-primary">Ver receta  </a>
                                 </div>
-                                <div class="card-footer">
-                                    <span class="float-right">{{ recipe.recipe_book.title}}</span>
-                                </div>
-                                <a href="/description?id={{ recipe.id }}" class="btn btn-primary">Ver receta  </a>
                             </div>
-                        </div>
-                {% endfor %}
-            </div>
-        </ul>
-        {% endif %}
+                    {% endfor %}
+                </div>
+            </ul>
+            {% endif %}
+        </div>
     </div>
 
 {% endblock %}

@@ -3,15 +3,17 @@
 
 {% block content %}
     <div class="container">
-        <h1>Tags de nuestras recetas: </h1>
-        <ul>
-            <div class="row">
-            {% for tag in tags %}
-                <div class="tag" style="width: 300px">
-                    <li><a href="/tag?name={{ tag.name }}"> {{ tag.name }} </a> </li>
+        <div id="tags">
+            <h1>Tags de nuestras recetas: </h1>
+            <ul>
+                <div class="row">
+                {% for tag in tags %}
+                    <div class="tag" style="width: 300px">
+                        <li><a href="/tag?name={{ tag.name }}"> {{ tag.name }} </a> </li>
+                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
-            </div>
-        </ul>
+            </ul>
+        </div>
     </div>
 {% endblock %}
